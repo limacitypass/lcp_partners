@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'loading/first_screen.dart';
 import 'routes.dart';
+import 'graphql/provider.dart';
 
 
 void main() { 
     Routes.initRoutes();
+    Provider.initProvider();
     runApp(new App()); 
 }
 

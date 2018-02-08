@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../routes.dart';
-import 'dart:async';
+import '../graphql/provider.dart';
+import '../graphql/query.dart';
 
 class LoginFields extends StatefulWidget {
 
@@ -24,8 +25,22 @@ class _LoginFieldsState extends State<LoginFields> {
     // }
 
     loginPressed(context) async {
-        // String username = _username.text;
-        // String password = _password.text;
+        String username = _username.text;
+        String password = _password.text;
+        
+        print(username);
+        print(password);
+
+        var q = new GQLQuery.asset("graphql/login.graphql")
+            ..addVar("email", username)
+            ..addVar("password", password);
+            
+        Provider.makeQuery(q)
+        .then((resp) {
+            print(resp.data);
+            print(resp.errors);
+        });
+        
 
         // Routes.navigateTo(context, "/dashboard", replace: false);
 

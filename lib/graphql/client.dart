@@ -10,6 +10,7 @@ class GQLResponse {
 
   GQLResponse({this.data, this.errors});
 
+  get existErrors => this.errors.length>0;
 
 }
 
