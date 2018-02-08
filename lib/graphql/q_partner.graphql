@@ -1,0 +1,19 @@
+query getPartner($id: ID!) {
+    Partner(id: $id) {
+        id
+        name
+        attraction {
+            name
+            address
+        }
+        visits {
+            ticketPoint {
+                owner {
+                    name
+                    email
+                }
+            }
+            registerAt
+        }
+    }
+}

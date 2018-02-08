@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:fullscreen_mode/fullscreen_mode.dart';
+import '../routes.dart';
+import 'dart:async';
+import 'package:fluro/fluro.dart';
 
 
-class FisrtScreen extends StatelessWidget {
+class FirstScreen extends StatelessWidget {
 
-  FisrtScreen() {
+  delay(context) async {
+    return new Future.delayed(const Duration(milliseconds: 2000), () {
+      Routes.navigateTo(context, "/login", replace: true, transition: TransitionType.fadeIn);
+      FullscreenMode.setNormal();      
+    });
+  }
+
+  FirstScreen() {
     FullscreenMode.setFullscreen();
+
+    
   }
   
   @override
   Widget build(BuildContext context) {
+    delay(context);
     return new Container(
       child: new DecoratedBox(
         decoration: new BoxDecoration(

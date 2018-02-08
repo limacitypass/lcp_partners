@@ -12,8 +12,12 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return new Column(
-      
+    return new Scaffold(
+      body: new Column(
+        children: <Widget>[
+          new 
+        ],
+      ),
     );
   }
 }

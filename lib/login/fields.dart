@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '../auth/validate.dart';
-import 'dart:async';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import '../routes.dart';
 
 class LoginFields extends StatefulWidget {
 
@@ -18,19 +15,20 @@ class _LoginFieldsState extends State<LoginFields> {
 
     double _paddingText = 67.0;
 
-    Future<File> _getLocalTokenFile() async {
-        // get the path to the document directory.
-        String dir = (await getApplicationDocumentsDirectory()).path;
-        print(dir);
-        return new File('$dir/token.lcp');
-    }
+    // Future<File> _getLocalTokenFile() async {
+    //     // get the path to the document directory.
+    //     String dir = (await getApplicationDocumentsDirectory()).path;
+    //     print(dir);
+    //     return new File('$dir/token.lcp');
+    // }
 
-    loginPressed() async {
-        String username = _username.text;
-        String password = _password.text;
+    loginPressed(context) {
+        // String username = _username.text;
+        // String password = _password.text;
 
-        File file = await _getLocalTokenFile();
-        await validateUser(username, password, file);
+        Routes.navigateTo(context, "/dashboard", replace: false);
+
+        
 
     }
 
@@ -88,7 +86,7 @@ class _LoginFieldsState extends State<LoginFields> {
                             highlightColor: new Color(0x00FFFFFF),
                             splashColor: new Color(0x09404040),
                             color: new Color(0xFFFFB431),
-                            onPressed: this.loginPressed,
+                            onPressed: () => this.loginPressed(context),
                             child: new Container(
                                 width: 137.0,
                                 child: new Row(
