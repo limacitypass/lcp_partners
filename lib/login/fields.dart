@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../routes.dart';
+import 'dart:async';
 
 class LoginFields extends StatefulWidget {
 
@@ -22,13 +23,11 @@ class _LoginFieldsState extends State<LoginFields> {
     //     return new File('$dir/token.lcp');
     // }
 
-    loginPressed(context) {
+    loginPressed(context) async {
         // String username = _username.text;
         // String password = _password.text;
 
-        Routes.navigateTo(context, "/dashboard", replace: false);
-
-        
+        // Routes.navigateTo(context, "/dashboard", replace: false);
 
     }
 

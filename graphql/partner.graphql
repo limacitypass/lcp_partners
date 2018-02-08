@@ -6,7 +6,7 @@ query getPartner($id: ID!) {
             name
             address
         }
-        visits {
+        visits (orderBy: registerAt_DESC, first: 10) {
             ticketPoint {
                 owner {
                     name

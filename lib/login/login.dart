@@ -15,7 +15,6 @@ class _LoginState extends State<Login> {
         return new Scaffold(
             appBar: new AppBar(
                 elevation: 0.0,
-                automaticallyImplyLeading: true,
             ),
             body: new ListView(
                 

@@ -1,7 +1,7 @@
 name: limacitypasspartners
 description: Limacitypass partners edition.
 
-dependencies:
+dependencies:  
   flutter:
     sdk: flutter
 
@@ -17,6 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 
 # For information on the generic Dart part of this file, see the
@@ -37,6 +38,10 @@ flutter:
       - assets/images/city.png
       - assets/images/top_login.png
       - assets/images/background.png
+      
+      # GraphQL queries
+      - graphql/partner.graphql
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
@@ -63,3 +68,4 @@ flutter:
           weight: 600
   # For details regarding fonts from package dependencies, 
   # see https://flutter.io/custom-fonts/#from-packages
+
