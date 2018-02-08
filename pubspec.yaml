@@ -41,6 +41,8 @@ flutter:
       
       # GraphQL queries
       - graphql/partner.graphql
+      - graphql/login.graphql
+      - graphql/user_logged.graphql
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
