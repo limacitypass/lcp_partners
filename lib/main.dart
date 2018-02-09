@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loading/first_screen.dart';
 import 'routes.dart';
-import 'graphql/provider.dart';
+import 'package:limacitypasspartners/graphql/provider.dart';
 
 
 void main() { 

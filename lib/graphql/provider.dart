@@ -9,7 +9,7 @@ class Provider {
     static GQLClient client;   
     static String _token = "";
 
-    set setToken(t) => _token = t;
+    static set setToken(t) => _token = t;
 
     static initProvider({String token}) {
         if (token != null) {

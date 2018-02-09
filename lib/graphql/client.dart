@@ -10,7 +10,16 @@ class GQLResponse {
 
   GQLResponse({this.data, this.errors});
 
-  get existErrors => this.errors.length>0;
+  get dataIn => this.data[this.data.keys.toList()[0]];
+
+  bool existErrors() {
+    if (this.errors == null) {
+      return false;
+    }else if (this.errors.length > 0) {
+      return false;
+    }
+    return true;
+  }
 
 }
 

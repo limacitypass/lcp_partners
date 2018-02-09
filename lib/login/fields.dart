@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../routes.dart';
-import '../graphql/provider.dart';
-import '../graphql/query.dart';
+import 'package:limacitypasspartners/graphql/provider.dart';
+import 'package:limacitypasspartners/graphql/query.dart';
+import 'package:limacitypasspartners/auth/storage.dart';
 
 class LoginFields extends StatefulWidget {
 
@@ -27,19 +27,51 @@ class _LoginFieldsState extends State<LoginFields> {
     loginPressed(context) async {
         String username = _username.text;
         String password = _password.text;
-        
+    
         print(username);
         print(password);
+        
+        var f = showDialog(
+            context: context,
+            child: new Container(
+                height: 200.0,
+                child: new Material(
+                    borderRadius: new BorderRadius.all(new Radius.circular(10.0)),
+                    child: new Center(child: new Text("Loading...")),
+                    
+                ),
+            )
+        );
+    
+        f.then((_) {
+            print('Exit dialog');
+        });
 
         var q = new GQLQuery.asset("graphql/login.graphql")
             ..addVar("email", username)
             ..addVar("password", password);
             
-        Provider.makeQuery(q)
-        .then((resp) {
-            print(resp.data);
-            print(resp.errors);
-        });
+        Provider.makeQuery(q).then(
+            (resp) async {
+                if (resp.existErrors()) {
+                    print(resp.errors);
+                    Navigator.pop(context);
+                } else {
+                    String token = resp.dataIn["token"];
+                    
+                    Provider.setToken = token;
+
+                    if (!(await CredentialStorage.existLocalCredential())) {
+                        CredentialStorage.createNewCredential(token);
+                    }else{
+                        String t = await CredentialStorage.loadAuthTokenFromCredential();
+                        print("Exists Credentials");
+                        print(t);
+                    }
+                    Navigator.pop(context);
+                }
+            }
+        );
         
 
         // Routes.navigateTo(context, "/dashboard", replace: false);
