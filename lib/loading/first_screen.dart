@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fullscreen_mode/fullscreen_mode.dart';
 import '../routes.dart';
 import 'dart:async';
 import 'package:fluro/fluro.dart';
@@ -10,14 +9,12 @@ class FirstScreen extends StatelessWidget {
   delay(context) async {
     return new Future.delayed(const Duration(milliseconds: 2000), () {
       Routes.navigateTo(context, "/login", replace: true, transition: TransitionType.fadeIn);
-      FullscreenMode.setNormal();      
+      // FullscreenMode.setNormal();      
     });
   }
 
   FirstScreen() {
-    FullscreenMode.setFullscreen();
-
-    
+    // FullscreenMode.setFullscreen();
   }
   
   @override

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
+import 'dart:async';
 
 class GQLQuery {
   File queryFile;
@@ -17,18 +18,21 @@ class GQLQuery {
     }
   }
 
-  GQLQuery.asset(String name, {Map<String, dynamic> vars}) {
-    this._keyAsset = name;
-    rootBundle.loadString(this._keyAsset)
-    .then((data) { // PLEASE, YOU NEED FOCUS THAT
-      data = data.replaceAll("\n", "");
-      this.queryString = data;
-    });
+  GQLQuery.query(String q, {Map<String, dynamic> vars}) {
+    this.queryString = q;
     if (vars != null) {
       this.vars = vars;
     }else{
       this.vars = new Map<String, dynamic>();
     }
+  }
+
+  static Future<GQLQuery> fromAsset(String name, {Map<String, dynamic> vars}) async {
+    var data = await rootBundle.loadString(name);
+    data = data.replaceAll("\n", "");
+    String q = data;
+    GQLQuery query = new GQLQuery.query(q, vars: vars);
+    return query;
   }
 
 
@@ -38,14 +42,7 @@ class GQLQuery {
   //   this.queryString = data;
   // }
 
-  GQLQuery.query(String q, {Map<String, dynamic> vars}) {
-    this.queryString = q;
-    if (vars != null) {
-      this.vars = vars;
-    }else{
-      this.vars = new Map<String, dynamic>();
-    }
-  }
+  
   set changeQuery(String query) => this.queryString = query;
   
   addVar(String name, dynamic value) {
