@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import '../routes.dart';
 import 'dart:async';
-import 'package:fluro/fluro.dart';
 
 
 class FirstScreen extends StatelessWidget {
 
   delay(context) async {
     return new Future.delayed(const Duration(milliseconds: 2000), () {
-      Routes.navigateTo(context, "/login", replace: true, transition: TransitionType.fadeIn);
+      Navigator.of(context).pushReplacementNamed("/login");
       // FullscreenMode.setNormal();      
     });
   }
@@ -34,6 +32,4 @@ class FirstScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:limacitypasspartners/graphql/provider.dart';
 import 'package:limacitypasspartners/auth/storage.dart';
-import 'package:limacitypasspartners/graphql/query.dart';
-import 'package:limacitypasspartners/graphql/client.dart';
+import 'package:limacitypasspartners/graphql/graphql.dart';
+
 
 
 class Dashboard extends StatefulWidget {
@@ -14,21 +13,35 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  var _partnerQ;
+  GQLQuery _partnerQ;
   var _partnerData;
 
   
   @override
-  initState() async {
+  initState() {
     super.initState();
-    String token = await CredentialStorage.loadAuthTokenFromCredential();
-    Provider.setToken = token;
+    CredentialStorage.loadAuthTokenFromCredential()
+    .then((token) {
+      Provider.setToken = token;
+    });
     
-    _partnerQ = await GQLQuery.fromAsset('graphql/partner');
+    GQLQuery.fromAsset('graphql/partner.graphql')
+    .then((pq){
+      _partnerQ = pq
+      ..addVar("id", "cjdcxvyhw005o0142smloehty");
     
-    GQLResponse resp = await Provider.makeQuery(_partnerQ);
-    assert(!resp.existErrors(), "Problems with query");
-    _partnerData = resp.dataIn;
+      Provider.makeAuthQuery(_partnerQ)
+      .then((resp) {
+        assert(!resp.existErrors(), "Problems with query, ${resp.errors.toString()}");
+        _partnerData = resp.data;
+        print(resp.data);
+        this.setState(()=>null);
+      });
+    });
+    
+    
+    
+    
   }
 
   @override
@@ -36,6 +49,7 @@ class _DashboardState extends State<Dashboard> {
     return new Scaffold(
       body: new Column(
         children: <Widget>[
+          new Text(this._partnerData.toString())
         ],
       ),
     );

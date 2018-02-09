@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:limacitypasspartners/graphql/provider.dart';
-import 'package:limacitypasspartners/graphql/query.dart';
 import 'package:limacitypasspartners/auth/storage.dart';
 import 'package:limacitypasspartners/routes.dart';
+import 'package:limacitypasspartners/graphql/graphql.dart';
+
 
 class LoginFields extends StatefulWidget {
 
@@ -82,10 +82,12 @@ class _LoginFieldsState extends State<LoginFields> {
         print(_username);
         print(_password);
 
-        Routes.navigateTo(context, "/dashboard", replace: true);
+        Navigator.of(context).pushNamed("/dashboard");
+
+        // Routes.navigateTo(context, "/dashboard", replace: true);
         return;
-        
-        var f = showDialog(
+
+        showDialog(
             context: context,
             child: new Container(
                 height: 200.0,
@@ -95,11 +97,10 @@ class _LoginFieldsState extends State<LoginFields> {
                     
                 ),
             )
-        );
-    
-        f.then((_) {
+        ).then((_) {
             print('Exit dialog');
         });
+    
 
         var q = await GQLQuery.fromAsset("graphql/login.graphql")
             ..addVar("email", _username)
