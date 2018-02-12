@@ -2,6 +2,7 @@ query getPartner($id: ID!) {
     Partner(id: $id) {
         id
         name
+        backgroundImage
         attraction {
             name
             address

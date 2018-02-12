@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:limacitypasspartners/auth/storage.dart';
 import 'package:limacitypasspartners/graphql/graphql.dart';
-
+import 'package:limacitypasspartners/home/info_top.dart';
+import 'package:limacitypasspartners/types.dart';
 
 
 class Dashboard extends StatefulWidget {
@@ -14,7 +15,8 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   GQLQuery _partnerQ;
-  var _partnerData;
+  Partner _partnerData;
+
 
   
   @override
@@ -33,15 +35,18 @@ class _DashboardState extends State<Dashboard> {
       Provider.makeAuthQuery(_partnerQ)
       .then((resp) {
         assert(!resp.existErrors(), "Problems with query, ${resp.errors.toString()}");
-        _partnerData = resp.data;
-        print(resp.data);
-        this.setState(()=>null);
+        this.setState((){
+          var id = resp.dataIn["id"];
+          var name = resp.dataIn["name"];
+          var backgroundImage = resp.dataIn["backgroundImage"];
+          var address = resp.dataIn["attraction"]["address"];
+          var attractionName = resp.dataIn["attraction"]["name"];
+
+          _partnerData = new Partner(id, name, backgroundImage, address, attractionName);
+
+        });
       });
-    });
-    
-    
-    
-    
+    });    
   }
 
   @override
@@ -49,7 +54,7 @@ class _DashboardState extends State<Dashboard> {
     return new Scaffold(
       body: new Column(
         children: <Widget>[
-          new Text(this._partnerData.toString())
+          new InfoTop(_partnerData),
         ],
       ),
     );
