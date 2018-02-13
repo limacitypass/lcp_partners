@@ -20,12 +20,14 @@ class Provider {
         
     }
 
-    static Future<GQLResponse> makeQuery(GQLQuery q) {
-        return client.run(q);
+    static Future<GQLResponse> makeQuery(GQLQuery q) async {
+        var response = await client.run(q);
+        return response;
     }
 
-    static Future<GQLResponse> makeAuthQuery(GQLQuery q) {
+    static Future<GQLResponse> makeAuthQuery(GQLQuery q) async {
         client.setJwtToken = _token;
-        return client.run(q, auth: true);
+        var response = await client.run(q, auth: true);
+        return response;
     }
 }

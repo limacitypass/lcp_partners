@@ -7,6 +7,7 @@ class CredentialStorage {
     static final _key = UTF8.encode("limacitypass");
 
     static final String _defaultFilename = "crendentials.lcp";
+    static final String _idFilename = "currentuser.id";
 
     static Future<String> _getCrendentialPath() async {
         var dir = await getApplicationDocumentsDirectory();
@@ -15,6 +16,17 @@ class CredentialStorage {
             path = dir.path + _defaultFilename;
         } else {
             path = dir.path + "/" + _defaultFilename; 
+        }
+        return path;
+    }
+
+    static Future<String> _getIdPath() async {
+        var dir = await getApplicationDocumentsDirectory();
+        String path = "";
+        if (dir.path.endsWith("/")) {
+            path = dir.path + _idFilename;
+        } else {
+            path = dir.path + "/" + _idFilename; 
         }
         return path;
     }
@@ -50,6 +62,12 @@ class CredentialStorage {
         assert(await existLocalCredential(), "Credentials not exist");
         
         cFile.writeAsStringSync(newToken);
+    }
+
+    static saveIdCredential() async {
+        String path = await _getIdPath();
+        File cFile = new File(path);
+        
     }
 
 }

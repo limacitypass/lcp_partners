@@ -16,9 +16,12 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   GQLQuery _partnerQ;
   Partner _partnerData;
-
   InfoTop _infoTop;
-
+  _DashboardState() {
+    _infoTop = new InfoTop(
+      new Partner("...", "...", "http://via.placeholder.com/350x150", "...", "..."),
+    );
+  }
 
   
   @override
@@ -27,9 +30,7 @@ class _DashboardState extends State<Dashboard> {
     CredentialStorage.loadAuthTokenFromCredential()
     .then((token) {
       Provider.setToken = token;
-    });
-    
-    GQLQuery.fromAsset('graphql/partner.graphql')
+      GQLQuery.fromAsset('graphql/partner.graphql')
     .then((pq){
       _partnerQ = pq
       ..addVar("id", "cjdcxvyhw005o0142smloehty");
@@ -37,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
       Provider.makeAuthQuery(_partnerQ)
       .then((resp) {
         assert(!resp.existErrors(), "Problems with query, ${resp.errors.toString()}");
-        this.setState((){
+        setState((){
           var id = resp.dataIn["id"];
           var name = resp.dataIn["name"];
           var backgroundImage = resp.dataIn["backgroundImage"];
@@ -45,10 +46,13 @@ class _DashboardState extends State<Dashboard> {
           var attractionName = resp.dataIn["attraction"]["name"];
 
           _partnerData = new Partner(id, name, backgroundImage, address, attractionName);
-          setState(()=>_infoTop = new InfoTop(_partnerData));          
+          _infoTop = new InfoTop(_partnerData);         
         });
       });
     });    
+    });
+    
+    
   }
 
   @override
@@ -56,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
     return new Scaffold(
       body: new Column(
         children: <Widget>[
-          _infoTop
+          _infoTop,
         ],
       ),
     );
