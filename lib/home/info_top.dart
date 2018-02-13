@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:limacitypasspartners/types.dart';
+import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
 
-class Sky extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var rect = Offset.zero & size;
-    var gradient = new RadialGradient(
-      center: const Alignment(0.7, -0.6),
-      radius: 0.2,
-      colors: [const Color(0xFFFFFF00), const Color(0xFF0099FF)],
-      stops: [0.4, 1.0],
-    );
-    canvas.drawRect(
-      rect,
-      new Paint()..shader = gradient.createShader(rect),
-    );
-  }
+class PainterTop extends CustomPainter {
+
+    String imageUrl;
+    
+    PainterTop(this.imageUrl);
+
+    @override
+    void paint(Canvas canvas, Size size) {
+        var rect = Offset.zero & size;
+        var path = new Path();
+
+        var _width = size.bottomRight(Offset.zero).dx;
+        
+        var _height =  size.bottomRight(Offset.zero).dy;
+
+        path.addPolygon(<Offset>[
+            new Offset(0.0, 0.0),
+            new Offset(_width, 0.0),
+            new Offset(_width, _height-40.0),
+            new Offset(0.0, _height)
+        ], true);
+
+        Paint _paint = new Paint();
+        _paint.color = Colors.redAccent;
+        
+        
+        print("========== IMAGE URL ==========");
+        print(imageUrl);
+
+        http.get(imageUrl)
+        .then((resp) {
+            if (resp.statusCode == 200) {
+                var list = resp.bodyBytes;
+                ui.decodeImageFromList(list, (i) {
+                    print(i.toString());
+                    canvas.drawImage(i, new Offset(100.0, 100.0), _paint);
+                    
+                });
+            }
+            
+        });
+        // canvas.drawPath(path, _paint);
+    }
 
   
   
-  bool shouldRepaint(Sky oldDelegate) => false;
-  bool shouldRebuildSemantics(Sky oldDelegate) => false;
+  bool shouldRepaint(PainterTop oldDelegate) => false;
+  bool shouldRebuildSemantics(PainterTop oldDelegate) => false;
 }
 
 class InfoTop extends StatelessWidget {
@@ -33,21 +63,47 @@ class InfoTop extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         
+        
 
         return new Container(
-            child: new CustomPaint(
-                painter: new Sky(),
-                child: new Center(
-                    child: new Text(
-                        _partnerInfo.name,
-                        style: const TextStyle(
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w900,
-                            color: const Color(0xFFFFFFFF),
-                        ),
-                    ),
+            height: 260.0,
+            width: MediaQuery.of(context).size.bottomRight(Offset.zero).dy,
+            decoration: new BoxDecoration(
+                image: new DecorationImage(
+                    image: new NetworkImage(_partnerInfo.backgroundImage),
+                    fit: BoxFit.fitHeight,
+                    colorFilter: new ColorFilter.mode(Colors.black54, BlendMode.darken)
                 ),
             ),
+            child: new Container(
+                child: new Column(
+                    children: <Widget>[
+                        new Padding(
+                            padding: new EdgeInsets.only(top: 150.0),
+                        ),
+                        new Text(
+                            _partnerInfo.name,
+                            style: new TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24.0,
+                                color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                        ),
+                        new Text(
+                            _partnerInfo.address,
+                            style: new TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14.0,
+                                color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                        ),
+                    ],
+                ),
+            )
         );
         
     }

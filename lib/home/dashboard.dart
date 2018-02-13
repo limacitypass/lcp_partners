@@ -17,6 +17,8 @@ class _DashboardState extends State<Dashboard> {
   GQLQuery _partnerQ;
   Partner _partnerData;
 
+  InfoTop _infoTop;
+
 
   
   @override
@@ -43,7 +45,7 @@ class _DashboardState extends State<Dashboard> {
           var attractionName = resp.dataIn["attraction"]["name"];
 
           _partnerData = new Partner(id, name, backgroundImage, address, attractionName);
-
+          setState(()=>_infoTop = new InfoTop(_partnerData));          
         });
       });
     });    
@@ -54,7 +56,7 @@ class _DashboardState extends State<Dashboard> {
     return new Scaffold(
       body: new Column(
         children: <Widget>[
-          new InfoTop(_partnerData),
+          _infoTop
         ],
       ),
     );
