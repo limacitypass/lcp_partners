@@ -5,7 +5,9 @@ import 'package:limacitypasspartners/home/info_top.dart';
 import 'package:limacitypasspartners/types.dart';
 import 'package:limacitypasspartners/home/visits.dart';
 import 'package:limacitypasspartners/home/new_ticket_button.dart';
-import 'dart:ui' as ui;
+import 'visit_card.dart';
+
+import '_testVisits.dart';
 
 class Dashboard extends StatefulWidget {
 
@@ -68,22 +70,15 @@ class _DashboardState extends State<Dashboard> {
           new Visits(),
           new Expanded(
             child: new Container(
-              child: new ListView(
-                padding: new EdgeInsets.all(20.0),
-                children: <Widget>[
-                  new BackdropFilter(
-                    filter: new ui.ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                    child: new Material(
-                      color: Colors.white,
-                      elevation: 4.0,
-                      type: MaterialType.card,
-                      child: new Text('asdsad'),
-                      borderRadius: new BorderRadius.all(new Radius.circular(4.0)),
-                    ),
-                  ),
-                  
-                ],
-              ),
+              child: new ListView.builder(
+
+                padding: new EdgeInsets.only(left: 12.0, right: 12.0),
+                itemExtent: 84.0,
+                itemCount: 4,
+                itemBuilder: (BuildContext context, int index) {
+                  return new VisitCard(loremVisits[index]);
+                },
+              )
             ),
           ),
         ],
@@ -92,6 +87,5 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
-/*
 
- */
+
