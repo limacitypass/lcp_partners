@@ -52,7 +52,10 @@ class InfoTop extends StatelessWidget {
                         ),
                     ),
                     child: new Container(
+                        padding: new EdgeInsets.only(left: 30.0),
                         child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                                 new Padding(
                                     padding: new EdgeInsets.only(top: 150.0),
@@ -67,6 +70,11 @@ class InfoTop extends StatelessWidget {
                                     ),
                                     textAlign: TextAlign.start,
                                 ),
+
+                                new Padding(
+                                    padding: new EdgeInsets.only(top: 3.5, bottom: 3.5),
+                                ),
+
                                 new Text(
                                     _partnerInfo.address,
                                     style: new TextStyle(

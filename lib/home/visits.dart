@@ -20,7 +20,7 @@ class Visits extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return new Container(
-            padding: new EdgeInsets.only(top:11.0, bottom: 20.0),
+            padding: new EdgeInsets.only(bottom: 20.0),
             child: new Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
