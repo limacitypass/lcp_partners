@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'dart:async';
 
 class CredentialStorage {
-    static final _key = UTF8.encode("limacitypass");
+    
+    static final _key = utf8.encode("limacitypass");
 
     static final String _defaultFilename = "crendentials.lcp";
     static final String _idFilename = "currentuser.id";

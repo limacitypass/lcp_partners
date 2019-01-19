@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:core';
-import 'query.dart';
+import 'query.dart';  
 import 'dart:convert';
 import 'dart:async';
 
@@ -70,7 +70,7 @@ class GQLClient {
     jsonQ.addAll({"query": query.queryString});
     jsonQ.addAll({"variables": query.vars});
 
-    var _finalBody = JSON.encode(jsonQ);
+    var _finalBody = json.encode(jsonQ);
 
 
     var response = await this.client.post(this.uri,
@@ -81,7 +81,7 @@ class GQLClient {
     // print("=================== DEBUG ===================");
     // print(response.body);
 
-    Map<String, dynamic> bodyRaw = JSON.decode(response.body);
+    Map<String, dynamic> bodyRaw = json.decode(response.body);
 
     if (bodyRaw.keys.contains("errors")) {
       return new GQLResponse(bodyRaw["data"], bodyRaw["errors"]);

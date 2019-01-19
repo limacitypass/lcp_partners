@@ -2,13 +2,13 @@ import 'dart:convert';
 
 Map<String, Object> getPayloadFromJWTToken(String token) {
     var chunks = token.split(".");
-
+    
     var payload = chunks[1];
-    payload = BASE64.normalize(payload);
+    
+    payload = base64.normalize(payload);
+    var codeUnits = base64.decode(payload);
+    var rawData = utf8.decode(codeUnits);
 
-    var codeUnits = BASE64.decode(payload);
-    var rawData = UTF8.decode(codeUnits);
-
-    return JSON.decode(rawData);
+    return json.decode(rawData);
 
 }
